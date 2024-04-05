@@ -1,19 +1,26 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgIf } from '@angular/common'; 
 import { RouterLink, RouterLinkActive } from '@angular/router'; 
+import { AuthService } from '../auth.service'; // Import AuthService
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
   standalone: true,
-  imports: [NgIf, RouterLink, RouterLinkActive] 
+  imports: [NgIf, RouterLink, RouterLinkActive]
 })
 export class NavbarComponent {
-  @Input() isAuthenticated = false;
-  @Output() onLogout = new EventEmitter<void>();
+  isAuthenticated = false; // No longer an @Input
+
+  constructor(private authService: AuthService) {
+    // Subscribe to the authentication state
+    this.authService.isAuthenticated.subscribe(isAuth => {
+      this.isAuthenticated = isAuth;
+    });
+  }
 
   logout(): void {
-    this.onLogout.emit();
+    this.authService.logout(); // Use AuthService for logout
   }
 }

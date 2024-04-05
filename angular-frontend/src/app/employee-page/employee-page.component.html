@@ -1,0 +1,30 @@
+<!-- employee-page.component.html -->
+<div class="employee-container">
+    <h2>Employee Management</h2>
+  
+    <button (click)="showAddForm = !showAddForm" class="add-employee-btn">Add New Employee</button>
+  
+    <div *ngIf="showAddForm || isUpdating" class="employee-form">
+      <form (ngSubmit)="isUpdating ? handleUpdateEmployee() : handleCreateNew()">
+        <input type="text" [(ngModel)]="newEmployee.first_name" name="first_name" placeholder="First Name" required>
+        <input type="text" [(ngModel)]="newEmployee.last_name" name="last_name" placeholder="Last Name" required>
+        <input type="email" [(ngModel)]="newEmployee.email" name="email" placeholder="Email" required>
+        <select [(ngModel)]="newEmployee.gender" name="gender" required>
+          <option value="" disabled>Select Gender</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+        </select>
+        <input type="number" [(ngModel)]="newEmployee.salary" name="salary" placeholder="Salary" required>
+        <button type="submit">{{ isUpdating ? 'Update' : 'Add' }} Employee</button>
+      </form>
+    </div>
+  
+    <ul class="employee-list">
+      <li *ngFor="let employee of employees" (click)="handleEmployeeClick(employee)">
+        {{ employee.first_name }} {{ employee.last_name }} - {{ employee.email }} - {{ employee.gender }} - ${{ employee.salary }}
+        <button (click)="handleDeleteEmployee(employee._id); $event.stopPropagation();">Delete</button>
+      </li>
+    </ul>
+  </div>
+  

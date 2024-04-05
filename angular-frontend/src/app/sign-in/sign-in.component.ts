@@ -25,7 +25,7 @@ export class SignInComponent {
       next: (response) => {
         console.log('Sign-in successful, token:', response.token);
         localStorage.setItem('token', response.token);
-        this.router.navigateByUrl('/dashboard'); 
+        this.router.navigateByUrl('/employees'); 
       },
       error: (error) => {
         console.error('Sign-in failed:', error);
