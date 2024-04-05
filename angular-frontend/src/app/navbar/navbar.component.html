@@ -1,0 +1,11 @@
+<nav>
+    <a routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">Home</a>
+    <ng-container *ngIf="isAuthenticated; else loggedOut">
+      <a routerLink="/employees" routerLinkActive="active-link">Employees</a>
+      <button (click)="logout()">Logout</button>
+    </ng-container>
+    <ng-template #loggedOut>
+      <a routerLink="/signup" routerLinkActive="active-link">Sign Up</a>
+      <a routerLink="/signin" routerLinkActive="active-link">Sign In</a>
+    </ng-template>
+  </nav>
