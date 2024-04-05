@@ -1,0 +1,37 @@
+h2 {
+    text-align: center;
+}
+
+.sign-in-form {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.sign-in-form input {
+    width: 50%;
+    padding: 8px;
+    margin: 5px 0;
+}
+
+.sign-in-form button {
+    width: 55%;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: rgb(68, 128, 9);
+    color: white;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.sign-in-form button:hover {
+    background-color: rgb(50, 93, 7);
+}
+
+.server-message {
+    margin-top: 10px;
+    color: red; 
+}

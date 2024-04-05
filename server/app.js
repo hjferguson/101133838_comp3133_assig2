@@ -4,12 +4,11 @@ const mongoose = require('mongoose');
 const userRoutes = require('./routes/userRoutes');
 const employeeRoutes = require('./routes/employeeRoutes');
 
-mongoose.connect('mongodb://mongodb:27017/userDB', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
-.then(() => console.log('MongoDB connected'))
-.catch(err => console.log(err));
+
+const uri = "mongodb+srv://harlanjazz:7xHS4c1HFFuaNdAm@fullstack2assign2.2nvpugl.mongodb.net/";
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('MongoDB connection successful'))
+  .catch((err) => console.error('MongoDB connection error:', err));
 
 const cors = require('cors');
 app.use(cors());

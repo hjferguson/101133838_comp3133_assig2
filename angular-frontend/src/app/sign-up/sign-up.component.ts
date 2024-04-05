@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
+import { SignUpService } from '../sign-up.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -18,36 +19,28 @@ export class SignUpComponent {
   };
   serverMessage = '';
 
-  constructor(private router: Router) {}
+  constructor(private signUpService: SignUpService, private router: Router) {}
 
   handleChange(event: any): void {
     const { name, value } = event.target;
     this.formData = { ...this.formData, [name]: value };
   }
 
-  async handleSubmit(event: Event): Promise<void> {
-    event.preventDefault();
+  handleSubmit(): void {
+    this.signUpService.signUp(this.formData).subscribe({
+      next: (response) => {
+        this.serverMessage = response.message;
 
-    try {
-      const response = await fetch('http://localhost:3000/api/v2/user/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(this.formData),
-      });
-
-      const result = await response.json();
-      this.serverMessage = result.message;
-
-      if (response.status === 201) {
-        this.router.navigateByUrl('/signin');
-      } else {
-        this.serverMessage = result.message || "An unexpected error occurred. Please try again later.";
+        if (response.status === 201) {
+          this.router.navigateByUrl('/signin');
+        } else {
+          this.serverMessage = response.message || "An unexpected error occurred. Please try again later.";
+        }
+      },
+      error: (error) => {
+        console.error('Signup failed:', error);
+        this.serverMessage = error.error.message || 'Sign up failed. Please try again later...';
       }
-    } catch (error) {
-      console.error('Signup failed:', error);
-      this.serverMessage = 'Sign up failed. Please try again later...';
-    }
+    });
   }
 }

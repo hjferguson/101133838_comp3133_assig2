@@ -1,0 +1,23 @@
+<!-- src/app/sign-in/sign-in.component.html -->
+<div>
+    <h2>Sign In</h2>
+    <form (submit)="handleSignIn()" class="sign-in-form">
+      <input
+        type="email"
+        name="email"
+        [(ngModel)]="credentials.email"
+        placeholder="Email"
+        required
+      />
+      <input
+        type="password"
+        name="password"
+        [(ngModel)]="credentials.password"
+        placeholder="Password"
+        required
+      />
+      <div *ngIf="serverMessage" class="server-message">{{ serverMessage }}</div>
+      <button type="submit">Sign In</button>
+    </form>
+  </div>
+  
