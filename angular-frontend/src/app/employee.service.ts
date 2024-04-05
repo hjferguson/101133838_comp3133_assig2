@@ -1,6 +1,6 @@
 // src/app/employee.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -11,6 +11,14 @@ export class EmployeeService {
 
   constructor(private http: HttpClient) {}
 
+  // Method to create headers with the Authorization token
+  private getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token');
+    return new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+    });
+  }
+
   getAllEmployees(): Observable<any> {
     return this.http.get(this.apiUrl);
   }
@@ -20,18 +28,22 @@ export class EmployeeService {
   }
 
   createEmployee(employeeData: any): Observable<any> {
-    return this.http.post(this.apiUrl, employeeData);
+    const headers = this.getAuthHeaders();
+    return this.http.post(this.apiUrl, employeeData, { headers });
   }
 
   updateEmployee(employeeId: string, employeeData: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${employeeId}`, employeeData);
+    const headers = this.getAuthHeaders();
+    return this.http.put(`${this.apiUrl}/${employeeId}`, employeeData, { headers });
   }
 
   deleteEmployee(employeeId: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}?eid=${employeeId}`);
+    const headers = this.getAuthHeaders();
+    return this.http.delete(`${this.apiUrl}?eid=${employeeId}`, { headers });
   }
 
   getStatistics(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/stats`); 
+   
+    return this.http.get(`${this.apiUrl}/stats`);
   }
 }

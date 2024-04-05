@@ -1,4 +1,3 @@
-// src/app/auth.service.ts
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -6,29 +5,27 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
+  private _isAuthenticated = new BehaviorSubject<boolean>(this.checkTokenPresence());
+
+  
+  isAuthenticated: Observable<boolean> = this._isAuthenticated.asObservable();
 
   constructor() {}
 
-  get isAuthenticated(): Observable<boolean> {
-    return this.isAuthenticatedSubject.asObservable();
-  }
-
-  // Call this when the user logs in
+ 
   login(token: string): void {
-    localStorage.setItem('authToken', token);
-    this.isAuthenticatedSubject.next(true);
+    localStorage.setItem('token', token); 
+    this._isAuthenticated.next(true);
   }
 
-  // Call this to log out the user
   logout(): void {
-    localStorage.removeItem('authToken');
-    this.isAuthenticatedSubject.next(false);
+    localStorage.removeItem('token');
+    this._isAuthenticated.next(false);
   }
 
-  // Check the token presence to determine initial authentication state
-  checkAuthentication(): void {
-    const token = localStorage.getItem('authToken');
-    this.isAuthenticatedSubject.next(!!token);
+  
+  private checkTokenPresence(): boolean {
+    const token = localStorage.getItem('token');
+    return !!token; 
   }
 }
