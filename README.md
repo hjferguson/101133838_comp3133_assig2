@@ -15,7 +15,7 @@ This project is a full stack web application developed with Angular for the fron
 - **Backend**: Node.js, Express
 - **Database**: MongoDB
 - **Authentication**: JWT
-- **Hosting**: Frontend on Vercel, Backend on [your_backend_service]
+- **Hosting**: Frontend on Vercel, Backend on Render
 
 ## Project Structure
 
@@ -54,14 +54,6 @@ Located in the `server` directory. It's a RESTful API developed with Node.js and
 1. Build your Angular app for production: ng build --prod
 2. Deploy the `dist/angular-frontend` directory to Vercel.
 
-### Backend on [your_backend_service]
+### Backend on Render
 
-1. Ensure all environment variables are set up in your hosting service.
-2. Deploy the `server` directory according to your hosting service's documentation.
-
-## Environment Variables
-
-To run this project, you will need to add the following environment variables to your `.env` file in the `server` directory:
-
-- `MONGO_URI` - Your MongoDB connection string.
-- `JWT_SECRET` - A secret key for JWT token generation.
+1. Deploy the `server` directory according to your hosting service's documentation.
